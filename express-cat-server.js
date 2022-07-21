@@ -38,6 +38,24 @@ app.get('/', function(req, res){
     res.setHeader('X-Powered-By', 'KittyPower');
     //send image
     res.sendFile(__dirname + '/images/' + randomImage);
-    console.log('Request received from ' + req.headers.host + ' for ' + randomImage);
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log('Request received from ' + ip + ' for ' + randomImage);
 }
 );
+
+app.get('/images', function(req, res){
+    //return directory listing
+    let imageList = (fs.readdirSync('./images/'));
+    for(let i = 0; i < imageList.length; i++){
+        //add links to each image
+        imageList[i] = '<a href="/images/' + imageList[i] + '">' + imageList[i] + '</a>';
+    }
+    const returnString = "<h1> Image List: </h1><ul>" + imageList.join('<br>\n').toString() + "</ul>";
+
+    res.send(returnString);
+    //get ip of client
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log('Request received from ' + ip + ' for /images');
+}
+);
+
