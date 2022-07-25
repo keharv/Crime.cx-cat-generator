@@ -17,6 +17,8 @@ The goal is to create the largest repository of cat images in the world.
 This web crawler was lovingly created by the following cat lovers:
 
 -@keharv
+-@TheMysteriousMouse
+-@immortal-beast
 
 
 # Built With
