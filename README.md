@@ -38,7 +38,7 @@ GoLang
 ```bash
 go build
 ```
-In the future update repo so that users can just do ```bash go get https://github.com/keharv/Crime.cx-cat-generator```
+In the future update repo so that users can just do ```go get https://github.com/keharv/Crime.cx-cat-generator```
 
 # Road Map
 
