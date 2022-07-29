@@ -86,7 +86,6 @@ func scrape(domain string, outputDir string) {
 
 	imageDownloader := c.Clone()
 	var link_id = getLinkID(domain)
-	fmt.Println("done getting link id")
 	// download images
 	imageDownloader.OnResponse(func(r *colly.Response) {
 		requestedURL := r.Request.URL.String()

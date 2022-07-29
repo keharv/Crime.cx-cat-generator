@@ -164,7 +164,6 @@ func addLink(link string) {
 }
 
 func getLinkID(link string) int {
-	fmt.Println("Getting link ID")
 	err := godotenv.Load(".env")
 	CheckError(err)
 	// connect to postgresql DB
@@ -208,7 +207,6 @@ func getLinkID(link string) int {
 // add image info to db
 func addImage(filename string, file_hash string, link_id int) bool {
 	err := godotenv.Load(".env")
-	fmt.Println("Adding image to database.")
 	CheckError(err)
 	// connect to postgresql DB
 	var (
