@@ -73,7 +73,12 @@ func scrape(domain string, outputDir string) {
 			contentType := r.Headers.Get("Content-Type")
 			ext = "." + strings.Split(contentType, "/")[1]
 		} else {
-			ext = filepath.Ext(requestedURL)
+			//make sure there are no invalid chars
+			if strings.Contains(filepath.Ext(requestedURL), "?") {
+				ext = strings.Split(filepath.Ext(requestedURL), "?")[0]
+			} else {
+				ext = filepath.Ext(requestedURL)
+			}
 		}
 		final_filename := dir + filename + ext
 		err := r.Save(final_filename)
