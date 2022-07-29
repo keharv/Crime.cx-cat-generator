@@ -1,5 +1,5 @@
 ![release workflow](https://github.com/keharv/Crime.cx-cat-generator/actions/workflows/go.yml/badge.svg)
-# About
+# [Crime.cx](https://Crime.cx) Cat Generator
 This web crawler scrapes images of cats from the internet.
 
 These images are then viewable at https://crime.cx and https://crime.cx/images
@@ -13,7 +13,7 @@ These images are then viewable at https://crime.cx and https://crime.cx/images
 
 The goal is to create the largest repository of cat images in the world.
 
-# Contributors
+## Contributors
 
 This web crawler was lovingly created by the following cat lovers:
 
@@ -23,7 +23,7 @@ This web crawler was lovingly created by the following cat lovers:
 -[@CowSayMoe](https://github.com/cowsaymoe)
 
 
-# Built With
+## Built With
 GoLang
     
 
@@ -40,13 +40,13 @@ go build
 ```
 In the future update repo so that users can just do ```go get https://github.com/keharv/Crime.cx-cat-generator```
 
-# Road Map
+## Road Map
 
-- [ ] Create multi-threaded bot that scrapes images then visits all links on webpage which stores visited websites in a database
-- [ ] Store md5 hashes of images in database to ensure no duplicate images are downloaded, even if they are deleted
+- [X] Create multi-threaded bot that scrapes images then visits all links on webpage which stores visited websites in a database
+- [X] Store md5 hashes of images in database to ensure no duplicate images are downloaded, even if they are deleted
 - [ ] Create bot that removes images that do not contain pictures of cats
 - [ ] Obtain additional storage and hosting to hold the future terabytes of cat images
 - [ ] Create a better front-end webpage for https://crime.cx/
 
-# Interested in contributing?
+## Interested in contributing?
 If you are interested in contribute, make a pull request! Additionally, you may contact me @ admin@crime.cx !
