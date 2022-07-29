@@ -29,6 +29,17 @@ GoLang
 
 [Tinygrad](http://github.com/geohot/tinygrad) with YOLOv2 - Used to determine if there is a cat within the scraped images
 
+## Usage
+```bash
+./scraper.exe -list="websites.txt" -output="scraped"
+```
+
+## Build/Install
+```bash
+go build
+```
+In the future update repo so that users can just do ```bash go get https://github.com/keharv/Crime.cx-cat-generator```
+
 # Road Map
 
 - [ ] Create multi-threaded bot that scrapes images then visits all links on webpage which stores visited websites in a database
