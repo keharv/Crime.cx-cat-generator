@@ -31,11 +31,12 @@ GoLang
 
 ## Usage
 ```bash
-./scraper.exe -list="websites.txt" -output="scraped"
+./scraper.exe -output="scraped"
 ```
 
 ## Build/Install
 ```bash
+go build -v ./...
 go build
 ```
 In the future update repo so that users can just do ```go get https://github.com/keharv/Crime.cx-cat-generator```
