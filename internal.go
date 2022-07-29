@@ -67,13 +67,13 @@ func scrape(domain string) {
 		requestedURL := r.Request.URL.String()
 		filename := generateRandomString(10)
 		dir := "scraped/"
-		ext := filepath.Ext(requestedURL)
 		fmt.Println(requestedURL)
-		if ext == "" && strings.Contains(requestedURL, "data:image") {
-			i := strings.Index(requestedURL, "data:image/")
-			fmt.Println(i)
-		} else if ext == "" {
-			ext = ".jpg"
+		var ext string
+		if filepath.Ext(requestedURL) == "" {
+			contentType := r.Headers.Get("Content-Type")
+			ext = "." + strings.Split(contentType, "/")[1]
+		} else {
+			ext = filepath.Ext(requestedURL)
 		}
 		final_filename := dir + filename + ext
 		err := r.Save(final_filename)
