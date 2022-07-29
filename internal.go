@@ -42,7 +42,7 @@ func generateRandomString(length int) string {
 	return string(b)
 }
 
-func scrape(domain string) {
+func scrape(domain string, outputDir string) {
 	fmt.Println("Checking", domain)
 
 	c := colly.NewCollector(
@@ -66,7 +66,7 @@ func scrape(domain string) {
 	imageDownloader.OnResponse(func(r *colly.Response) {
 		requestedURL := r.Request.URL.String()
 		filename := generateRandomString(10)
-		dir := "scraped/"
+		dir := outputDir + "/"
 		fmt.Println(requestedURL)
 		var ext string
 		if filepath.Ext(requestedURL) == "" {

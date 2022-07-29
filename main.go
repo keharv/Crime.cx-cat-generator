@@ -9,6 +9,7 @@ import (
 
 func main() {
 	websites := []string{}
+	outputDir := flag.String("output", "scraped", "Output directory")
 	listFile := flag.String("list", "websites.txt", "List of websites to scrape.")
 	flag.Parse()
 
@@ -22,7 +23,7 @@ func main() {
 	// add to website array
 	for fileScanner.Scan() {
 		websites = append(websites, fileScanner.Text())
-		scrape(fileScanner.Text())
+		scrape(fileScanner.Text(), *outputDir)
 	}
 	readFile.Close()
 
