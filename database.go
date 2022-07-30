@@ -112,7 +112,6 @@ func doneWithLink(link string) {
 		log.Fatal(err)
 	}
 	fmt.Println("Finished with URL:", link)
-	return
 }
 
 func addLink(link string) {
@@ -137,7 +136,6 @@ func addLink(link string) {
 			return
 		}
 	}
-	return
 }
 
 func getLinkID(link string) int {
