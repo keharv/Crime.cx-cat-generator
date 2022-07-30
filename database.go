@@ -12,10 +12,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func getLinks() string {
+func getConfig() string {
 	err := godotenv.Load(".env")
 	CheckError(err)
-	// connect to postgresql DB
 	var (
 		host     = os.Getenv("DATABASE_HOST")
 		port     = os.Getenv("DATABASE_PORT")
@@ -23,12 +22,16 @@ func getLinks() string {
 		password = os.Getenv("DATABASE_PASSWORD")
 		dbname   = os.Getenv("DATABASE_NAME")
 	)
-
 	// connection string
 	psqlconn := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
+	return psqlconn
+}
 
+func getLinks() string {
+
+	// connect to postgresql DB
 	// open database
-	db, err := sql.Open("postgres", psqlconn)
+	db, err := sql.Open("postgres", getConfig())
 	CheckError(err)
 
 	// close database
@@ -65,35 +68,23 @@ func getLinks() string {
 			if err != nil {
 				tx.Rollback()
 			}
+			fmt.Println("Starting from URL:", website)
 		}
 
 	}
 	err = tx.Commit()
 	if err != nil {
 		log.Fatal(err)
-	} else {
-		fmt.Println("Finished getting links.", website)
 	}
 	return website
 }
 
 func doneWithLink(link string) {
-	err := godotenv.Load(".env")
-	CheckError(err)
+
 	// connect to postgresql DB
-	var (
-		host     = os.Getenv("DATABASE_HOST")
-		port     = os.Getenv("DATABASE_PORT")
-		user     = os.Getenv("DATABASE_USER")
-		password = os.Getenv("DATABASE_PASSWORD")
-		dbname   = os.Getenv("DATABASE_NAME")
-	)
-
 	// connection string
-	psqlconn := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
-
 	// open database
-	db, err := sql.Open("postgres", psqlconn)
+	db, err := sql.Open("postgres", getConfig())
 	CheckError(err)
 
 	// close database
@@ -119,29 +110,16 @@ func doneWithLink(link string) {
 	err = tx.Commit()
 	if err != nil {
 		log.Fatal(err)
-	} else {
-		fmt.Println("Telling everyone we are done with the url.")
 	}
+	fmt.Println("Finished with URL:", link)
+	return
 }
 
 func addLink(link string) {
 	if link != "" {
-		err := godotenv.Load(".env")
-		CheckError(err)
 		// connect to postgresql DB
-		var (
-			host     = os.Getenv("DATABASE_HOST")
-			port     = os.Getenv("DATABASE_PORT")
-			user     = os.Getenv("DATABASE_USER")
-			password = os.Getenv("DATABASE_PASSWORD")
-			dbname   = os.Getenv("DATABASE_NAME")
-		)
-
-		// connection string
-		psqlconn := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
-
 		// open database
-		db, err := sql.Open("postgres", psqlconn)
+		db, err := sql.Open("postgres", getConfig())
 		CheckError(err)
 
 		// close database
@@ -156,28 +134,16 @@ func addLink(link string) {
 		updateStmt := `INSERT INTO links (link, time_inserted, status_id) VALUES ($1, $2, 1)`
 		_, err = db.Exec(updateStmt, link, time_inserted)
 		if err != nil {
-			fmt.Println("Error adding link to database.")
+			return
 		}
 	}
+	return
 }
 
 func getLinkID(link string) int {
-	err := godotenv.Load(".env")
-	CheckError(err)
 	// connect to postgresql DB
-	var (
-		host     = os.Getenv("DATABASE_HOST")
-		port     = os.Getenv("DATABASE_PORT")
-		user     = os.Getenv("DATABASE_USER")
-		password = os.Getenv("DATABASE_PASSWORD")
-		dbname   = os.Getenv("DATABASE_NAME")
-	)
-
-	// connection string
-	psqlconn := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
-
 	// open database
-	db, err := sql.Open("postgres", psqlconn)
+	db, err := sql.Open("postgres", getConfig())
 	CheckError(err)
 
 	// close database
@@ -204,22 +170,9 @@ func getLinkID(link string) int {
 
 // add image info to db
 func addImage(filename string, file_hash string, link_id int) bool {
-	err := godotenv.Load(".env")
-	CheckError(err)
 	// connect to postgresql DB
-	var (
-		host     = os.Getenv("DATABASE_HOST")
-		port     = os.Getenv("DATABASE_PORT")
-		user     = os.Getenv("DATABASE_USER")
-		password = os.Getenv("DATABASE_PASSWORD")
-		dbname   = os.Getenv("DATABASE_NAME")
-	)
-
-	// connection string
-	psqlconn := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
-
 	// open database
-	db, err := sql.Open("postgres", psqlconn)
+	db, err := sql.Open("postgres", getConfig())
 	CheckError(err)
 
 	// close database
@@ -234,7 +187,6 @@ func addImage(filename string, file_hash string, link_id int) bool {
 	updateStmt := `INSERT INTO images (filename, md5, link_id, time_downloaded) VALUES ($1, $2, $3, $4)`
 	_, err = db.Exec(updateStmt, filename, file_hash, link_id, time_downloaded)
 	if err != nil {
-		fmt.Println(err)
 		return false
 	} else {
 		return true

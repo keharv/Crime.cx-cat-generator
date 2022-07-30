@@ -78,6 +78,7 @@ func scrapeLinks(url string) {
 }
 
 func scrape(domain string, outputDir string) {
+	fmt.Println("Scraping for images.")
 	c := colly.NewCollector(
 		// max  depth because it will go on forever if not
 		colly.MaxDepth(10),
@@ -136,8 +137,6 @@ func scrape(domain string, outputDir string) {
 	c.OnHTML("img[src]", func(e *colly.HTMLElement) {
 		imageDownloader.Visit(e.Request.AbsoluteURL(e.Attr("src")))
 	})
-	scrapeLinks(domain)
-	fmt.Println("Scraping for images.")
 	c.Visit(domain)
 
 }
