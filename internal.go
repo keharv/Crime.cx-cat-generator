@@ -74,6 +74,7 @@ func scrape(domain string, outputDir string) {
 		// max  depth because it will go on forever if not
 		colly.MaxDepth(10),
 	)
+	c.SetRequestTimeout(120 * time.Second)
 	// rate limit to be nice. dont want to get blacklisted or banned
 	c.Limit(&colly.LimitRule{
 		// Filter domains affected by this rule

@@ -44,7 +44,7 @@ func getLinks() string {
 
 	// get links in the database
 	var website string
-	rows, err := db.Query("SELECT link FROM links WHERE status_id = 1 LIMIT 1")
+	rows, err := db.Query("SELECT link FROM links WHERE status_id = 1 ORDER BY time_inserted ASC LIMIT 1")
 	CheckError(err)
 	for rows.Next() {
 		var siteURL string
@@ -157,8 +157,6 @@ func addLink(link string) {
 		_, err = db.Exec(updateStmt, link, time_inserted)
 		if err != nil {
 			fmt.Println("Error adding link to database.")
-		} else {
-			fmt.Println("Successfully added link")
 		}
 	}
 }

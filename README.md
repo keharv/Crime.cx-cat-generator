@@ -45,6 +45,7 @@ In the future update repo so that users can just do ```go get https://github.com
 
 - [X] Create multi-threaded bot that scrapes images then visits all links on webpage which stores visited websites in a database
 - [X] Store md5 hashes of images in database to ensure no duplicate images are downloaded, even if they are deleted
+- [ ] Normalize images to max images to 40mb
 - [ ] Create bot that removes images that do not contain pictures of cats
 - [ ] Obtain additional storage and hosting to hold the future terabytes of cat images
 - [ ] Create a better front-end webpage for https://crime.cx/
