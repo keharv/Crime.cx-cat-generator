@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/gocolly/colly"
+	"github.com/mrz1836/go-sanitize"
 )
 
 func CheckError(err error) {
@@ -46,6 +47,7 @@ func generateRandomString(length int) string {
 }
 
 func scrapeLinks(url string) {
+	fmt.Println("Scraping for links.")
 	c := colly.NewCollector(
 		// max  depth because it will go on forever if not
 		colly.MaxDepth(10),
@@ -61,15 +63,21 @@ func scrapeLinks(url string) {
 	})
 
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-		addLink(e.Request.AbsoluteURL(e.Attr("href")))
+		link := sanitize.URL(e.Request.AbsoluteURL(e.Attr("href")))
+		if strings.Contains(link, "http://") || strings.Contains(link, "https://") {
+			addLink(link)
+		} else {
+			newlink := "http://" + link
+			if len(newlink) >= 10 {
+				addLink(newlink)
+			}
+		}
 	})
 
 	c.Visit(url)
 }
 
 func scrape(domain string, outputDir string) {
-	fmt.Println("Checking", domain)
-
 	c := colly.NewCollector(
 		// max  depth because it will go on forever if not
 		colly.MaxDepth(10),
