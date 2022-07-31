@@ -4,30 +4,15 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func init() {
-	err := godotenv.Load(".env")
-	CheckError(err)
 	// connect to postgresql DB
-	var (
-		host     = os.Getenv("DATABASE_HOST")
-		port     = os.Getenv("DATABASE_PORT")
-		user     = os.Getenv("DATABASE_USER")
-		password = os.Getenv("DATABASE_PASSWORD")
-		dbname   = os.Getenv("DATABASE_NAME")
-	)
-
-	// connection string
-	psqlconn := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
-
 	// open database
-	db, err := sql.Open("postgres", psqlconn)
+	db, err := sql.Open("postgres", getConfig())
 	CheckError(err)
 
 	// close database
