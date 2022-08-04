@@ -12,7 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gocolly/colly"
+	"github.com/gocolly/colly/v2"
+	"github.com/gocolly/colly/v2/extensions"
 	"github.com/mrz1836/go-sanitize"
 )
 
@@ -52,6 +53,8 @@ func scrapeLinks(url string) {
 		// max  depth because it will go on forever if not
 		colly.MaxDepth(10),
 	)
+	// random user agent
+	extensions.RandomUserAgent(c)
 	// rate limit to be nice. dont want to get blacklisted or banned
 	c.Limit(&colly.LimitRule{
 		// Filter domains affected by this rule
@@ -83,6 +86,7 @@ func scrape(domain string, outputDir string) {
 		// max  depth because it will go on forever if not
 		colly.MaxDepth(10),
 	)
+	extensions.RandomUserAgent(c)
 	c.SetRequestTimeout(120 * time.Second)
 	// rate limit to be nice. dont want to get blacklisted or banned
 	c.Limit(&colly.LimitRule{
@@ -95,6 +99,7 @@ func scrape(domain string, outputDir string) {
 	})
 
 	imageDownloader := c.Clone()
+	extensions.RandomUserAgent(imageDownloader)
 	var link_id = getLinkID(domain)
 	// download images
 	imageDownloader.OnResponse(func(r *colly.Response) {
