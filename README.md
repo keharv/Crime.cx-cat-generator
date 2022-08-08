@@ -1,7 +1,7 @@
 # About
 This web crawler scrapes images of cats from the internet.
 
-These images are then viewable at https://crime.cx and https://crime.cx/images
+These images are then viewable at https://crime.cx and https://crime.cx/images MIRROR: https://kitty.photos/
 
 -Feline fine? This web crawler will make you feel great!
 
